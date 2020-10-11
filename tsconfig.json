@@ -1,0 +1,14 @@
+{
+    "compilerOptions": {
+        "lib": ["es2015", "dom"],// TSC가 코드 실행 환경에서 이용할 수 있다고 가정하는 API
+        "module": "commonjs",// TSC가 컴파일할 대상 모듈 시스템
+        "outDir": "dist",// 생성된 자바스크립트 코드를 출력할 디렉토리
+        "declaration": true,
+        "sourceMap": true,
+        "strict": true,// 유효하지 않은 코드에 대한 엄격한 검사 여부
+        "target": "es2015"// TSC가 코드를 컴파일할 자바스크립트 버전
+    },
+    "include": [// TSC가 타입스크립트 파일을 찾을 디렉토리
+        "src"
+    ]
+}
