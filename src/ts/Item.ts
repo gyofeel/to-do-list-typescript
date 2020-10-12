@@ -6,21 +6,12 @@ export class Item {
         this.priority = priority;
     }
 
-    private content:string = '';
-    private priority:Priority = 'medium';
-    private isDone:boolean = false;
-    private date:Date = new Date();
+    public content:string = '';
+    public priority:Priority = 'medium';
+    public isDone:boolean = false;
+    private date:number = Date.now();
     private id:string = `id-${this.date}`;
 
-    setContent(content:string) {
-        this.content = content;
-    }
-    setPriority(priority:Priority) {
-        this.priority = priority;
-    }
-    setDone(done:boolean) {
-        this.isDone = done;
-    }
     getDate() {
         return this.date;
     }
