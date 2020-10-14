@@ -1,16 +1,20 @@
-import { Item } from './Item';
+import { Item } from '../Item';
 
-export const getEl = (selectors) => {
+export const getEl = (selectors:string) => {
     return document.querySelector(selectors);
 }
 
-export const addEvent = (selectors, type, callback, useCapture) => {
-    return getEl(selectors).addEventListener(type, callback, useCapture);
-}
+// export const addEvent = (selectors:string, type:string, callback:Function, useCapture:boolean) => {
+//     const target = getEl(selectors);
+//     if (!target) {
+//         return;
+//     }
+//     return target.addEventListener(type, callback, useCapture);
+// }
 
-export const removeEvent = (selectors, type, callback, useCapture) => {
-    return getEl(selectors).removeEventListener(type, callback, useCapture);
-}
+// export const removeEvent = (selectors:string, type:string, callback:Function, useCapture:boolean) => {
+//     return getEl(selectors).removeEventListener(type, callback, useCapture);
+// }
 
 const createItemElement = (item:Item) => {
     const { content, priority, isDone } = item;
@@ -20,6 +24,7 @@ const createItemElement = (item:Item) => {
             <span class="is-done ${isDone ? 'ok' : ''}">
             <span class="content">${content}</span>
             <span class="priority ${priority}"></span>
+            <span class="remove">삭제</span>
         </div>
     `
 
@@ -33,6 +38,6 @@ export const updateListChildElements = (selector:string, list:Array<Item>) => {
     const wrapElement = getEl(selector);
 
     const itemElements = list.map((item) => createItemElement(item)).join('');
-    wrapElement.innerHTML = '';
-    wrapElement.innerHTML = itemElements;    
+    wrapElement!.innerHTML = '';
+    wrapElement!.innerHTML = itemElements;    
 }

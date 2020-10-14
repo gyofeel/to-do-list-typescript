@@ -1,7 +1,7 @@
-import { Priority, ItemValue } from './config/types';
+import { Priority } from './config/types';
 
 export class Item {
-    public constructor({ content, priority}:ItemValue) {
+    public constructor(content, priority) {
         this.content = content;
         this.priority = priority;
     }

@@ -10,12 +10,19 @@ export class Store {
     private id:string = '';
     private progressList:Array<Item> = [];
     private doneList:Array<Item> = [];
+    public inputPriority:Priority = 'medium';
 
     public getProgressItem(id:string) {
         return this.progressList.find(el => el.getId() === id);
     }
-    public getDoneListItem(id:string) {
+    public getDoneItem(id:string) {
         return this.doneList.find(el => el.getId() === id);
+    }
+    public getProgressList() {
+        return this.progressList;
+    }
+    public getDoneList() {
+        return this.doneList;
     }
     public addProgressItem(item:Item) {
         if (!item) {
@@ -50,7 +57,7 @@ export class Store {
         return item;
     }   
     public moveDoneToProgress(id:string) {
-        const item = this.getProgressItem(id);
+        const item = this.getDoneItem(id);
         if (!item) {
             return;
         }
