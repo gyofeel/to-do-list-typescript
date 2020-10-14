@@ -1,0 +1,63 @@
+.app {
+    background-color: #13103d;
+    width: 100%;
+    height: 1920px;
+    padding: 100px 10%;
+}
+
+h1 {
+    font-size: 25px;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    left: 50%;
+    top: 100px;
+}
+
+.contents-wrap {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    left: 50%;
+    top: 50%;
+    width: 600px;
+    height: 600px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.list-wrap {
+    width: 210px;
+    height: 430px;
+    position: relative;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    border: 1px solid white;
+}
+
+.list-wrap.in-progress::after {
+    content: '# 할 일';
+    position: absolute;
+    left: 12px;
+    top: -23px;
+    font-size: 17px;
+}
+.list-wrap.done::after {
+    content: '# 완료';
+    position: absolute;
+    left: 0;
+    top: -23px;
+    font-size: 17px;
+}
+
+.input-wrap {
+    width: 350px;
+    height: 50px;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    left: 50%;
+    bottom: 10px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}

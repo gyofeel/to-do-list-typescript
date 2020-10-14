@@ -13,21 +13,35 @@
 <body>
     <div class="app">
         <h1>* 할일 목록 *</h1>
-        <section
-            class="list-wrap in-progress"
-        ></section>
-        <section
-            class="list-wrap done"
-        ></section>
+        <div
+            class="contents-wrap"
+        >
+            <section
+                class="list-wrap in-progress"
+            ></section>
+            <section
+                class="list-wrap done"
+            ></section>
+        </div>
         <section
             class="input-wrap"
         >
             <input 
+                type="text"
                 class="item-input"
             />
-            <div 
+            <div
                 class="input-button"
-            ></div>
+            >
+                추가하기
+            </div>
+            <div
+                class="priority-buttons"
+            >
+                <span class="low">></span>
+                <span class="medium">></span>
+                <span class="high">></span>
+            </div>
         </section>
     </div>
 </body>
