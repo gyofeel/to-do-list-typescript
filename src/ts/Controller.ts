@@ -93,10 +93,25 @@ export class Controller {
     private clickPriorityEventHandler(e:Event) {
         console.log(e);
         const targetEl = e.target as HTMLElement;
+        const parentEl = targetEl.parentElement as HTMLElement;
         const priorityValue = targetEl.classList[0]
         if (priorityValue !== 'high' && priorityValue !== 'medium' && priorityValue !== 'low') {
             return;
         }
         this.store.inputPriority = priorityValue as Priority;
+        let selectedIdxNum = 0;
+        if (priorityValue === 'high') {
+            selectedIdxNum = 3;
+        } else if (priorityValue === 'medium') {
+            selectedIdxNum = 2;
+        } else {
+            selectedIdxNum = 1;
+        }
+        parentEl.children[0].className = 'low';
+        parentEl.children[1].className = 'medium';
+        parentEl.children[2].className = 'high';
+        for (let i = 0; i < selectedIdxNum; i++) {
+            parentEl.children[i].className += ' --selected';
+        }
     }
 }

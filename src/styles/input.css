@@ -17,3 +17,11 @@ input:focus {
     height: 30px;
     border: 3px solid white;
 }
+
+.priority-buttons span {
+    font-size: 35px;
+}
+.priority-buttons span.--selected {
+    color: yellow;
+    font-weight: bold;
+}

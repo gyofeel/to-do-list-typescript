@@ -21,9 +21,9 @@ const createItemElement = (item:Item) => {
     const id = item.getId();
     const element = `
         <div class="item" id="${id}">
-            <div class="is-done ${isDone ? 'ok' : ''}"></div>
+            <div class="is-done ${isDone ? '--ok' : ''}"></div>
             <span class="content">${content}</span>
-            <span class="priority ${priority}"></span>
+            <span class="priority">(${priority[0]})</span>
             <span class="remove">삭제</span>
         </div>
     `

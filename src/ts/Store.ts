@@ -28,6 +28,7 @@ export class Store {
         if (!item) {
             return;
         }
+        item.isDone = false;
         this.progressList.push(item);
         this.progressList.sort((a, b) => a.getDate() - b.getDate());
 
@@ -39,6 +40,7 @@ export class Store {
         if (!item) {
             return;
         }
+        item.isDone = true;
         this.doneList.push(item);
         this.doneList.sort((a, b) => a.getDate() - b.getDate());
 
