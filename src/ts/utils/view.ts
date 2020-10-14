@@ -21,7 +21,7 @@ const createItemElement = (item:Item) => {
     const id = item.getId();
     const element = `
         <div class="item" id="${id}">
-            <span class="is-done ${isDone ? 'ok' : ''}">
+            <div class="is-done ${isDone ? 'ok' : ''}"></div>
             <span class="content">${content}</span>
             <span class="priority ${priority}"></span>
             <span class="remove">삭제</span>
@@ -32,12 +32,11 @@ const createItemElement = (item:Item) => {
 }
 
 export const updateListChildElements = (selector:string, list:Array<Item>) => {
-    if (!selector || !list || list.length) {
+    if (!selector || !list) {
         return;
     }
     const wrapElement = getEl(selector);
-
     const itemElements = list.map((item) => createItemElement(item)).join('');
     wrapElement!.innerHTML = '';
-    wrapElement!.innerHTML = itemElements;    
+    wrapElement!.innerHTML = itemElements;
 }

@@ -3,7 +3,7 @@ import { Item } from './Item';
 import { updateListChildElements } from './utils/view';
 
 export class Store {
-    constructor(id:string) {
+    public constructor(id:string) {
         this.id = id;
     }
 
@@ -61,8 +61,8 @@ export class Store {
         if (!item) {
             return;
         }
-        this.addDoneItem(item);
-        this.removeProgressItem(id);
+        this.addProgressItem(item);
+        this.removeDoneItem(id);
 
         return item;
     }
@@ -73,7 +73,7 @@ export class Store {
         }
         this.progressList.splice(targetIdx, 1);
 
-        updateListChildElements('.done', this.progressList);
+        updateListChildElements('.in-progress', this.progressList);
 
         return this.progressList;
     }

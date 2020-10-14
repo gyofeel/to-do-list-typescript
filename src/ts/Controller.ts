@@ -1,9 +1,10 @@
 import { Item } from './Item';
 import { Store } from './Store';
 import { getEl } from './utils/view';
+import { Priority } from './config/types';
 
 export class Controller {
-    constructor(store:Store) {
+    public constructor(store:Store) {
         this.store = store;
     }
     private store:Store | null = null;
@@ -11,13 +12,12 @@ export class Controller {
     private doneIdList:Array<string> = [];
 
     public initialize() {
-        console.log('test');
         if (!this.store) {
             console.error('this.store is null!');
             return;
         }
-        getEl('.input-button')?.addEventListener('click', this.clickAddItemEventHandler, false);
-        getEl('.priority-buttons')?.addEventListener('click', this.clickPriorityEventHandler, true);
+        getEl('.input-button')?.addEventListener('click', this.clickAddItemEventHandler.bind(this), false);
+        getEl('.priority-buttons')?.addEventListener('click', this.clickPriorityEventHandler.bind(this), true);
         const progressList = this.store.getProgressList();
         const doneList = this.store.getDoneList();
         if (progressList && progressList.length) {
@@ -27,33 +27,76 @@ export class Controller {
             this.doneIdList = doneList.map(el => el.getId());
         }
 
-        this.progressIdList.forEach(id => {
-            const childNodesList = getEl(`#${id}`)!.children;
-            childNodesList[0].addEventListener('click', this.clickToggleDoneEventHandler, false);
-            childNodesList[3].addEventListener('click', this.clickRemoveEventHandler, false);
-        });
-        this.doneIdList.forEach(id => {
-            const childNodesList = getEl(`#${id}`)!.children;
-            childNodesList[0].addEventListener('click', this.clickToggleDoneEventHandler, false);
-            childNodesList[3].addEventListener('click', this.clickRemoveEventHandler, false);
+        this.registerListEvent(this.getListToIdList(this.store.getProgressList()));
+        this.registerListEvent(this.getListToIdList(this.store.getDoneList()));
+    }
+    private getNewId() {
+        return `id-${Date.now()}`;
+    }
+    private getListToIdList(list) {
+        return list.map(el => el.getId());
+    }
+    private registerItemEvent(id) {
+        const childNodesList = getEl(`#${id}`)!.children;
+        console.log(childNodesList);
+        childNodesList[0].addEventListener('click', this.clickToggleDoneEventHandler.bind(this), false);
+        childNodesList[3].addEventListener('click', this.clickRemoveEventHandler.bind(this), false);
+    }
+    private registerListEvent(idList:Array<string>) {
+        idList.forEach(id => {
+            this.registerItemEvent(id);
         });
     }
-
     private clickToggleDoneEventHandler(e:Event) {
-
+        console.log(e);
+        const targetEl = e.target as HTMLElement;
+        const itemId = targetEl.parentElement.id;
+        if (this.progressIdList.includes(itemId)) {
+            this.store.moveProgressToDone(itemId);
+        } else if (this.doneIdList.includes(itemId)) {
+            this.store.moveDoneToProgress(itemId);
+        }
+        this.progressIdList = this.getListToIdList(this.store.getProgressList());
+        this.registerListEvent(this.progressIdList);
+        this.doneIdList = this.getListToIdList(this.store.getDoneList());
+        this.registerListEvent(this.doneIdList);
     }
     private clickRemoveEventHandler(e:Event) {
-
+        console.log(e);
+        const targetEl = e.target as HTMLElement;
+        const itemId = targetEl.parentElement.id;
+        console.log(itemId);
+        if (this.progressIdList.includes(itemId)) {
+            this.store.removeProgressItem(itemId);
+            this.progressIdList = this.getListToIdList(this.store.getProgressList());
+            this.registerListEvent(this.progressIdList);
+        } else if (this.doneIdList.includes(itemId)) {
+            this.store.removeDoneItem(itemId);
+            this.doneIdList = this.getListToIdList(this.store.getDoneList());
+            this.registerListEvent(this.doneIdList);
+        }
     }
     private clickAddItemEventHandler(e:Event) {
         console.log(e);
-        // const target = e.target as HTMLElement;
         const inputEl = getEl('.item-input') as HTMLInputElement;
-        console.log(inputEl.value);
         const itemContent = inputEl.value;
-        this.store.addProgressItem(new Item(itemContent, this.store.inputPriority));
+        if (!itemContent) {
+            return;
+        }
+        const id = this.getNewId();
+        this.store.addProgressItem(new Item(itemContent, this.store.inputPriority, id));
+        this.progressIdList = this.getListToIdList(this.store.getProgressList());
+        this.registerListEvent(this.progressIdList);
+        inputEl.value = '';
+        console.log(this.store);
     }
     private clickPriorityEventHandler(e:Event) {
         console.log(e);
+        const targetEl = e.target as HTMLElement;
+        const priorityValue = targetEl.classList[0]
+        if (priorityValue !== 'high' && priorityValue !== 'medium' && priorityValue !== 'low') {
+            return;
+        }
+        this.store.inputPriority = priorityValue as Priority;
     }
 }
