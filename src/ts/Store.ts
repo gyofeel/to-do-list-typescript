@@ -1,4 +1,4 @@
-import { Priority } from './config/types';
+import { Priority, ItemList } from './config/types';
 import { Item } from './Item';
 import { updateListChildElements } from './utils/view';
 
@@ -8,8 +8,8 @@ export class Store {
     }
 
     private id:string = '';
-    private progressList:Array<Item> = [];
-    private doneList:Array<Item> = [];
+    private progressList:ItemList = [];
+    private doneList:ItemList = [];
     public inputPriority:Priority = 'medium';
 
     public getProgressItem(id:string) {

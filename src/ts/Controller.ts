@@ -1,15 +1,15 @@
+import { Priority, IdList } from './config/types';
 import { Item } from './Item';
 import { Store } from './Store';
 import { getEl } from './utils/view';
-import { Priority } from './config/types';
 
 export class Controller {
     public constructor(store:Store) {
         this.store = store;
     }
     private store:Store | null = null;
-    private progressIdList:Array<string> = [];
-    private doneIdList:Array<string> = [];
+    private progressIdList:IdList = [];
+    private doneIdList:IdList = [];
 
     public initialize() {
         if (!this.store) {
@@ -42,7 +42,7 @@ export class Controller {
         childNodesList[0].addEventListener('click', this.clickToggleDoneEventHandler.bind(this), false);
         childNodesList[3].addEventListener('click', this.clickRemoveEventHandler.bind(this), false);
     }
-    private registerListEvent(idList:Array<string>) {
+    private registerListEvent(idList:IdList) {
         idList.forEach(id => {
             this.registerItemEvent(id);
         });
