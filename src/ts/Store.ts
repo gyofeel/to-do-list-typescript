@@ -30,7 +30,7 @@ export class Store {
         }
         item.isDone = false;
         this.progressList.push(item);
-        this.progressList.sort((a, b) => a.getDate() - b.getDate());
+        this.progressList.sort((a, b) => b.getDate() - a.getDate());
 
         updateListChildElements('.in-progress', this.progressList);
 
@@ -42,7 +42,7 @@ export class Store {
         }
         item.isDone = true;
         this.doneList.push(item);
-        this.doneList.sort((a, b) => a.getDate() - b.getDate());
+        this.doneList.sort((a, b) => b.getDate() - a.getDate());
 
         updateListChildElements('.done', this.doneList);
 
