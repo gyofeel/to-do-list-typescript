@@ -29,6 +29,9 @@ export class Controller {
 
         this.registerListEvent(this.getListToIdList(this.store.getProgressList()));
         this.registerListEvent(this.getListToIdList(this.store.getDoneList()));
+
+        getEl('.json-button.import').addEventListener('click', this.clickJsonImportEventHandler.bind(this), false);
+        getEl('.json-button.export').addEventListener('click', this.clickJsonExportEventHandler.bind(this), false);
     }
     private getNewId() {
         return `id-${Date.now()}`;
@@ -113,5 +116,14 @@ export class Controller {
         for (let i = 0; i < selectedIdxNum; i++) {
             parentEl.children[i].className += ' --selected';
         }
+    }
+    private clickJsonImportEventHandler(e:Event) {
+        console.log(e);
+        const textAreaEl = getEl('.json-text-area');
+    }
+    private clickJsonExportEventHandler(e:Event) {
+        console.log(e);
+        const textAreaEl = getEl('.json-text-area') as HTMLTextAreaElement;
+        textAreaEl.value = this.store.getStoreJsonData();
     }
 }
