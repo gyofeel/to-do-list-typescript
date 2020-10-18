@@ -12,6 +12,12 @@ export class Store {
     private doneList:ItemList = [];
     public inputPriority:Priority = 'medium';
 
+    public setId(id:string) {
+        this.id = id;
+    }
+    public getId() {
+        return this.id;
+    }
     public getProgressItem(id:string) {
         return this.progressList.find(el => el.getId() === id);
     }
@@ -92,9 +98,13 @@ export class Store {
     }
     public clearProgressList() {
         this.progressList = [];
+
+        updateListChildElements('.in-progress', this.progressList);
     }
     public clearDoneList() {
         this.doneList = [];
+
+        updateListChildElements('.done', this.doneList);
     }
     public getStoreJsonData() {
         const obj = {

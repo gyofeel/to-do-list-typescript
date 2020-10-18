@@ -21,14 +21,14 @@ export class Controller {
         const progressList = this.store.getProgressList();
         const doneList = this.store.getDoneList();
         if (progressList && progressList.length) {
-            this.progressIdList = progressList.map(el => el.getId());
+            this.progressIdList = this.getListToIdList(progressList);
         }
         if (doneList && doneList.length) {
-            this.doneIdList = doneList.map(el => el.getId());
+            this.doneIdList = this.getListToIdList(doneList);
         }
 
-        this.registerListEvent(this.getListToIdList(this.store.getProgressList()));
-        this.registerListEvent(this.getListToIdList(this.store.getDoneList()));
+        this.registerListEvent(this.progressIdList);
+        this.registerListEvent(this.doneIdList);
 
         getEl('.json-button.import').addEventListener('click', this.clickJsonImportEventHandler.bind(this), false);
         getEl('.json-button.export').addEventListener('click', this.clickJsonExportEventHandler.bind(this), false);
@@ -87,7 +87,7 @@ export class Controller {
             return;
         }
         const id = this.getNewId();
-        this.store.addProgressItem(new Item(itemContent, this.store.inputPriority, id));
+        this.store.addProgressItem(new Item(itemContent, this.store.inputPriority, id, Date.now()));
         this.progressIdList = this.getListToIdList(this.store.getProgressList());
         this.registerListEvent(this.progressIdList);
         inputEl.value = '';
@@ -119,7 +119,25 @@ export class Controller {
     }
     private clickJsonImportEventHandler(e:Event) {
         console.log(e);
-        const textAreaEl = getEl('.json-text-area');
+        const textAreaEl = getEl('.json-text-area') as HTMLTextAreaElement;
+        const importDatas = JSON.parse(textAreaEl.value);
+        this.store.setId(importDatas.id);
+
+        this.store.clearProgressList();
+        this.store.clearDoneList();
+
+        importDatas.progressList.forEach(item => {
+            const { content, priority, isDone } = item;
+            this.store.addProgressItem(new Item(content, priority, item.id, item.date, isDone));
+        })
+        importDatas.doneList.forEach(item => {
+            const { content, priority, isDone} = item;
+            this.store.addDoneItem(new Item(content, priority, item.id, item.date, isDone))
+        })
+        this.progressIdList = this.getListToIdList(this.store.getProgressList());
+        this.registerListEvent(this.progressIdList);
+        this.doneIdList = this.getListToIdList(this.store.getDoneList());
+        this.registerListEvent(this.doneIdList);
     }
     private clickJsonExportEventHandler(e:Event) {
         console.log(e);

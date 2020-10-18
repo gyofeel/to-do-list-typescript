@@ -1,16 +1,18 @@
 import { Priority } from './config/types';
 
 export class Item {
-    public constructor(content, priority, id) {
+    public constructor(content, priority, id, date, isDone?) {
         this.content = content;
         this.priority = priority;
         this.id = id;
+        this.date = date;
+        this.isDone = isDone;
     }
 
     public content:string = '';
     public priority:Priority = 'medium';
     public isDone:boolean = false;
-    private date:number = Date.now();
+    private date:number = 0;
     private id:string = '';
 
     getDate() {
