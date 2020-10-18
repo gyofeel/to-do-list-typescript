@@ -19,4 +19,13 @@ export class Item {
     getId() {
         return this.id;
     }
+    getObjectData() {
+        return {
+            content: this.content,
+            priority: this.priority,
+            isDone: this.isDone,
+            date: this.date,
+            id: this.id
+        };
+    }
 }

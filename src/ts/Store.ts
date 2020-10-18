@@ -96,4 +96,12 @@ export class Store {
     public clearDoneList() {
         this.doneList = [];
     }
+    public getStoreJsonData() {
+        const obj = {
+            id: this.id,
+            progressList: this.progressList.map(item => item.getObjectData()),
+            doneList: this.doneList.map(item => item.getObjectData()),
+        }
+        return JSON.stringify(obj);
+    }
 }
